@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Controller\ApiController;
+use App\Http\Response\ApiResponse;
 use App\Services\User\UpdateUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class UpdateUserAction extends AbstractController
+class UpdateUserAction extends ApiController
 {
     private UpdateUserService $updateUserService;
 
@@ -23,7 +25,7 @@ class UpdateUserAction extends AbstractController
     /**
      * @throws \JsonException
      */
-    public function __invoke(Request $request, string $id): JsonResponse
+    public function __invoke(Request $request, string $id): ApiResponse
     {
         $data = \json_decode(
             $request->getContent(),
@@ -35,16 +37,7 @@ class UpdateUserAction extends AbstractController
         $user = ($this->updateUserService)($id, $data['name']);
         //$user = $this->updateUserService->__invoke($id, $data['name']);
 
-        return new JsonResponse(
-            [
-                'user' => [
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'createdOn' => $user->getCreatedAt()->format(\DateTimeImmutable::RFC822),
-                ],
-            ],
-            JsonResponse::HTTP_OK
-        );
+        return $this->createResponse(['user' => $user->toArray()], ApiResponse::HTTP_CREATED);
+
     }
 }

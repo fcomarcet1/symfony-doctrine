@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
+use App\Controller\ApiController;
+use App\Http\Response\ApiResponse;
 use App\Services\User\CreateUserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
-class CreateUserAction extends AbstractController
+class CreateUserAction extends ApiController
 {
     private CreateUserService $createUserService;
 
@@ -22,7 +24,7 @@ class CreateUserAction extends AbstractController
     /**
      * @throws \JsonException
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): ApiResponse
     {
         // Get data from request
         $data = json_decode(
@@ -35,16 +37,6 @@ class CreateUserAction extends AbstractController
         $user = ($this->createUserService)($data['name'], $data['email']);
         //$user = $this->createUserService->__invoke($data['name'], $data['email']);
 
-        return new JsonResponse(
-            [
-                'user' => [
-                    'id' => $user->getId(),
-                    'name' => $user->getName(),
-                    'email' => $user->getEmail(),
-                    'createdOn' => $user->getCreatedAt()->format(\DateTime::RFC3339),
-                ],
-            ],
-            JsonResponse::HTTP_CREATED
-        );
+        return $this->createResponse(['user' => $user->toArray()], ApiResponse::HTTP_CREATED);
     }
 }
