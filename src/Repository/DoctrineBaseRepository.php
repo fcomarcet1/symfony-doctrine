@@ -30,10 +30,8 @@ abstract class DoctrineBaseRepository
 
     abstract protected static function entityClass(): string;
 
-    /**
-     * @return ObjectManager
-     */
-    public function getEntityManager(): ObjectManager
+
+    public function getEntityManager()
     {
         $entityManager = $this->managerRegistry->getManager();
 
