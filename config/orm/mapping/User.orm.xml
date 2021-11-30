@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\User">
+        <id name="id" type="integer"/>
+        <field name="name" length="20"/>
+        <field name="email" length="100" />
+        <field name="createdAt" type="datetime_immutable" />
+        <field name="updatedAt" type="datetime" />
+
+        <unique-constraints>
+            <unique-constraint name="UQ_email_user" columns="email"/>
+        </unique-constraints>
+
+        <indexes>
+            <index name="IDX_name_user" columns="name"/>
+        </indexes>
+
+    </entity>
+</doctrine-mapping>
