@@ -32,8 +32,8 @@ class CreateUserAction extends AbstractController
             JSON_THROW_ON_ERROR
         );
 
-        //$user = ($this->createUserService)($data['name'], $data['email']);
-        $user = $this->createUserService->__invoke($data['name'], $data['email']);
+        $user = ($this->createUserService)($data['name'], $data['email']);
+        //$user = $this->createUserService->__invoke($data['name'], $data['email']);
 
         return new JsonResponse(
             [

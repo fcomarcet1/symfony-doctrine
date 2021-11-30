@@ -23,7 +23,7 @@ class UpdateUserAction extends AbstractController
     /**
      * @throws \JsonException
      */
-    public function __invoke(Request $request, $id): JsonResponse
+    public function __invoke(Request $request, string $id): JsonResponse
     {
         $data = \json_decode(
             $request->getContent(),
@@ -32,7 +32,8 @@ class UpdateUserAction extends AbstractController
             JSON_THROW_ON_ERROR
         );
 
-        $user = $this->updateUserService->__invoke($id, $data['name']);
+        $user = ($this->updateUserService)($id, $data['name']);
+        //$user = $this->updateUserService->__invoke($id, $data['name']);
 
         return new JsonResponse(
             [

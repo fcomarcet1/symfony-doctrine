@@ -67,4 +67,21 @@ class User
     {
         $this->updatedAt = new \DateTime();
     }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'createdOn' => $this->createdAt->format(\DateTimeImmutable::RFC3339),
+            'updatedOn' => $this->updatedAt->format(\DateTime::RFC3339),
+        ];
+    }
+
+    public function toString(): string
+    {
+      //return $this->name;
+      return $this->name . ' ' . $this->email;
+    }
 }
