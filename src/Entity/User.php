@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\DoctrineUserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 
 class User
 {
-    private ?int $id;
+    private string $id;
     private string $name;
     private string $email;
     private \DateTimeImmutable $createdAt;
@@ -16,13 +17,14 @@ class User
 
     public function __construct(string $name, string $email)
     {
+        $this->id = Uuid::v4()->toRfc4122();
         $this->name = $name;
         $this->email = $email;
         $this->createdAt = new \DateTimeImmutable();
         $this->markAsUpdated();
     }
 
-    public function getId(): ?int
+    public function getId(): string
     {
         return $this->id;
     }
