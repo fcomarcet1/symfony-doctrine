@@ -6,10 +6,7 @@ namespace App\Controller\User;
 use App\Controller\ApiController;
 use App\Http\Response\ApiResponse;
 use App\Services\User\UpdateUserService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 
 class UpdateUserAction extends ApiController

@@ -14,6 +14,8 @@ class User
     private string $email;
     private \DateTimeImmutable $createdAt;
     private \DateTime $updatedAt;
+    private Profile $profile;
+
 
     public function __construct(string $name, string $email)
     {
@@ -22,6 +24,7 @@ class User
         $this->email = $email;
         $this->createdAt = new \DateTimeImmutable();
         $this->markAsUpdated();
+        $this->profile = new Profile($this);
     }
 
     public function getId(): string
@@ -68,6 +71,17 @@ class User
         $this->updatedAt = new \DateTime();
     }
 
+    public function getProfile(): Profile
+    {
+        return $this->profile;
+    }
+
+
+    public function setProfile(Profile $profile): void
+    {
+        $this->profile = $profile;
+    }
+
     public function toArray(): array
     {
         return [
@@ -76,6 +90,10 @@ class User
             'email' => $this->email,
             'createdOn' => $this->createdAt->format(\DateTimeImmutable::RFC3339),
             'updatedOn' => $this->updatedAt->format(\DateTime::RFC3339),
+            'profile' => [
+                'id' => $this->profile->getId(),
+                'pictureUrl' => $this->profile->getPictureUrl(),
+            ],
         ];
     }
 
