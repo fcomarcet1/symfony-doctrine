@@ -15,5 +15,9 @@
             <index name="IDX_name_user" columns="name"/>
         </indexes>
 
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="markAsUpdated"/>
+        </lifecycle-callbacks>
+
     </entity>
 </doctrine-mapping>

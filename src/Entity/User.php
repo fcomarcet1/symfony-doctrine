@@ -5,37 +5,23 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- */
+
 class User
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private $name;
+    private ?int $id;
+    private string $name;
+    private string $email;
+    private \DateTimeImmutable $createdAt;
+    private \DateTime $updatedAt;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updatedAt;
+    public function __construct(string $name, string $email)
+    {
+        $this->name = $name;
+        $this->email = $email;
+        $this->createdAt = new \DateTimeImmutable();
+        $this->markAsUpdated();
+    }
 
     public function getId(): ?int
     {
@@ -71,22 +57,13 @@ class User
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTime
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTime $UpdatedAt): self
+    public function markAsUpdated(): void
     {
-        $this->updatedAt = $UpdatedAt;
-
-        return $this;
+        $this->updatedAt = new \DateTime();
     }
 }
