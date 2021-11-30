@@ -32,7 +32,7 @@ class UserEventSubscriber implements EventSubscriber
 
         if ($entity instanceof User) {
             $this->logger->info(
-                \sprintf('User has been updated. New name: %s UpdatedAt: %s', $entity->getName(), $entity->getUpdatedAt())
+                \sprintf('User has been updated. New name: %s UpdatedAt: %s', $entity->getName(), $entity->getUpdatedAt()->format('Y-m-d H:i:s'))
             );
         }
     }
