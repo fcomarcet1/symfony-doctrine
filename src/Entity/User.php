@@ -15,6 +15,7 @@ class User
     private \DateTimeImmutable $createdAt;
     private \DateTime $updatedAt;
     private Profile $profile;
+    private ?Country $country;
 
 
     public function __construct(string $name, string $email)
@@ -25,6 +26,7 @@ class User
         $this->createdAt = new \DateTimeImmutable();
         $this->markAsUpdated();
         $this->profile = new Profile($this);
+        $this->country = null;
     }
 
     public function getId(): string
@@ -82,6 +84,16 @@ class User
         $this->profile = $profile;
     }
 
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): void
+    {
+        $this->country = $country;
+    }
+
     public function toArray(): array
     {
         return [
@@ -90,10 +102,12 @@ class User
             'email' => $this->email,
             'createdOn' => $this->createdAt->format(\DateTimeImmutable::RFC3339),
             'updatedOn' => $this->updatedAt->format(\DateTime::RFC3339),
-            'profile' => [
+            'profile' => $this->profile->toArray(),
+            'country' => $this->country ? $this->country->toArray() : null,
+            /*'profile' => [
                 'id' => $this->profile->getId(),
                 'pictureUrl' => $this->profile->getPictureUrl(),
-            ],
+            ],*/
         ];
     }
 
