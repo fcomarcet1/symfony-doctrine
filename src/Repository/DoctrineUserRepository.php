@@ -20,6 +20,11 @@ class DoctrineUserRepository extends DoctrineBaseRepository
         return User::class;
     }
 
+    public function getAll(): array
+    {
+        return $this->objectRepository->findAll();
+    }
+
     public function findOneById(string $id): ?User
     {
         return $this->objectRepository->find($id);

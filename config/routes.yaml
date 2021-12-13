@@ -2,6 +2,12 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+# User routes
+app.user.get:
+  path: /api/users
+  controller: App\Controller\User\GetUsersAction
+  methods: [ GET ]
+
 app.user.create:
   path: /api/users
   controller: App\Controller\User\CreateUserAction
@@ -12,3 +18,8 @@ app.user.update:
   controller: App\Controller\User\UpdateUserAction
   methods: [ PUT ]
 
+# Employee routes
+app.employee.get:
+  path: /api/employees
+  controller: App\Controller\Employee\GetEmployeesAction
+  methods: [ GET ]

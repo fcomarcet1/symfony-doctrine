@@ -27,6 +27,13 @@ build: ## Rebuilds all the containers
 	cp -n .env.dist .env || true
 	U_ID=${UID} docker-compose build
 
+build-no-cache: ## Rebuilds all the containers
+	docker network create codenip-sf-doctrine-network || true
+	cp -n docker-compose.yml.dist docker-compose.yml || true
+	cp -n .env.dist .env || true
+	U_ID=${UID} docker-compose build --no-cache
+
+
 prepare: ## Runs backend commands
 	$(MAKE) composer-install
 	$(MAKE) migrations
