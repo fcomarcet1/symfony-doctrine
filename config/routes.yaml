@@ -4,8 +4,8 @@
 
 # User routes
 app.user.get:
-  path: /api/users
-  controller: App\Controller\User\GetUsersAction
+  path: /api/users/{id}
+  controller: App\Controller\User\GetUserAction
   methods: [ GET ]
 
 app.user.create:
@@ -17,6 +17,12 @@ app.user.update:
   path: /api/users/{id}
   controller: App\Controller\User\UpdateUserAction
   methods: [ PUT ]
+
+# Profile routes
+app.profile.get:
+  path: /api/profiles/{id}
+  controller: App\Controller\Profile\GetProfileByIdAction
+  methods: [ GET ]
 
 # Employee routes
 app.employee.get:
